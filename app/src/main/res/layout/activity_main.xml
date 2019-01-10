@@ -43,13 +43,8 @@
 
                 <TextView
                     android:id="@+id/LeftTeam"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="8dp"
                     android:text="Time A"
-                    android:textSize="20sp"
-
+                    style="@style/TeamTitle"
                     />
 
 
@@ -57,69 +52,49 @@
                     android:id="@+id/circleLeft"
                     android:layout_below="@+id/LeftTeam"
                     android:background="@drawable/circle_black"
-                    android:layout_width="140dp"
-                    android:layout_height="140dp"
-                    android:layout_centerHorizontal="true"
-                    android:gravity="center"
                     android:text="6"
-                    android:textColor="@android:color/white"
-                    android:textSize="52sp"/>
+                    style="@style/PointArea"/>
 
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_below="@+id/circleLeft"
-                    android:layout_centerHorizontal="true"
-                    android:paddingTop="8dp"
                     android:text="venceu X"
-                    android:textSize="16sp" />
+                    style="@style/TeamPoints"/>
 
 
                 <Button
-                    android:layout_width="70dp"
-                    android:layout_height="65dp"
                     android:layout_above="@+id/LeftButtonPlus"
+                    android:text="+3"
+                    style="@style/Button"
                     android:layout_marginBottom="8dp"
                     android:layout_marginLeft="32dp"
                     android:layout_marginStart="32dp"
                     android:layout_marginTop="8dp"
                     android:background="@color/colorBlack"
-                    android:text="+3"
-                    android:textColor="@android:color/white"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                     />
 
                 <Button
                     android:id="@+id/LeftButtonPlus"
-                    android:layout_width="70dp"
-                    android:layout_height="65dp"
                     android:layout_above="@+id/LeftButtonMinus"
+                    android:text="+1"
+                    style="@style/Button"
                     android:layout_alignParentRight="true"
                     android:layout_marginBottom="8dp"
                     android:layout_marginRight="32dp"
                     android:layout_marginEnd="32dp"
                     android:layout_alignParentEnd="true"
-                    android:text="+1"
                     android:background="@color/colorBlack"
-                    android:textColor="@android:color/white"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
                     />
 
                 <Button
                     android:id="@+id/LeftButtonMinus"
-                    android:layout_width="70dp"
-                    android:layout_height="65dp"
+                    android:text="-1"
+                    style="@style/Button"
                     android:layout_alignParentBottom="true"
                     android:layout_marginBottom="32dp"
                     android:layout_marginLeft="32dp"
                     android:layout_marginStart="32dp"
-                    android:text="-1"
                     android:background="@color/colorBlack"
-                    android:textColor="@android:color/white"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
                     />
             </RelativeLayout>
 
@@ -139,84 +114,60 @@
 
                 <TextView
                     android:id="@+id/RightTeam"
-                    android:layout_centerHorizontal="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:text="Time B"
-                    android:textSize="20sp"
-                    android:layout_marginBottom="8dp"
+                    style="@style/TeamTitle"
                     />
 
                 <TextView
                     android:id="@+id/RightCircle"
                     android:layout_below="@+id/RightTeam"
-                    android:layout_width="140dp"
-                    android:layout_height="140dp"
                     android:background="@drawable/circle_red"
-                    android:layout_centerHorizontal="true"
-                    android:gravity="center"
-                    android:textSize="52sp"
                     android:text="7"
-                    android:textColor="@android:color/white"
+                    style="@style/PointArea"
                     >
                 </TextView>
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:layout_below="@+id/RightCircle"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="8dp"
                     android:text="venceu X"
-                    android:textSize="16sp"
-                    />
+                    style="@style/TeamPoints"/>
 
                 <Button
-                    android:layout_width="70dp"
-                    android:layout_height="65dp"
-                    android:text="+3"
                     android:layout_above="@+id/RigthButtonPlus"
+                    android:text="+3"
+                    style="@style/Button"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="32dp"
                     android:layout_marginEnd="32dp"
                     android:layout_alignParentEnd="true"
                     android:layout_marginBottom="8dp"
                     android:background="@color/colorRed"
-                    android:textColor="@android:color/white"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
+
+
                     />
 
                 <Button
                     android:id="@+id/RigthButtonPlus"
-                    android:layout_width="70dp"
-                    android:layout_height="65dp"
-                    android:text="+1"
                     android:layout_above="@+id/RigthButtonMinus"
+                    android:text="+1"
+                    style="@style/Button"
                     android:layout_marginLeft="32dp"
                     android:layout_marginStart="32dp"
                     android:layout_marginBottom="8dp"
                     android:background="@color/colorRed"
-                    android:textColor="@android:color/white"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
                     />
 
                 <Button
                     android:id="@+id/RigthButtonMinus"
-                    android:layout_width="70dp"
-                    android:layout_height="65dp"
                     android:text="-1"
+                    style="@style/Button"
+                    android:background="@color/colorRed"
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="32dp"
                     android:layout_marginEnd="32dp"
                     android:layout_alignParentEnd="true"
                     android:layout_marginBottom="32dp"
-                    android:background="@color/colorRed"
-                    android:textColor="@android:color/white"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
                     />
 
             </RelativeLayout>
