@@ -6,5 +6,8 @@
     <string name="nameRightTeam">Time B</string>
     <string name="actionReset">Zerar</string>
     <string name="startNumber">0</string>
+    <string name="winEmoji">🎉🎉🎉</string>
+    <string name="warnMessage">Está de onze ⛔</string>
+    <string name="okText">OK</string>
 
 </resources>

@@ -1,6 +1,4 @@
 #TODO
-- avisar quando esta de onze
-- falar quem ganhou e mostrar um dialogo
 - tela não pode apagar
 - zerar pontos
 - app nao pode ser rotacionado
@@ -14,3 +12,5 @@
 - add logo
 - adicionar botão de config
 - logica dos pontos
+- avisar quando esta de onze
+- falar quem ganhou e mostrar um dialogo

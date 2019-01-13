@@ -114,32 +114,57 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
 
     private void updateLeftSide() {
         if (mPointsLeft >= LIMIT_WIN) {
-            // every one start at 0
-            resetPoints();
-            renderPoints();
             // left win a global point (tento)
             mNumberWinsLeft += 1;
-            setWinner(mWinLeft, mNumberWinsLeft);
-        } else {
-            mPointsLeftTeam.setText(String.format("%d", mPointsLeft));
+            setWinner(mWinLeft, mNumberWinsLeft, mNameLeftTeam.getValue());
         }
-
+        if (mPointsLeft == LIMIT_WIN - 1) {
+            showDialogWarngGame();
+        }
+        mPointsLeftTeam.setText(String.format("%d", mPointsLeft));
     }
 
     private void updateRightSide() {
         if (mPointsRight >= LIMIT_WIN) {
-            resetPoints();
-            renderPoints();
             mNumberWinsRight += 1;
-            setWinner(mWinRight, mNumberWinsRight);
-        } else {
-            mPointsRightTeam.setText(String.format("%d", mPointsRight));
+            setWinner(mWinRight, mNumberWinsRight, mNameRightTeam.getValue());
         }
-
+        if (mPointsRight == LIMIT_WIN - 1) {
+            showDialogWarngGame();
+        }
+        mPointsRightTeam.setText(String.format("%d", mPointsRight));
     }
 
-    private void setWinner(TextView winner, Integer number) {
+    private void setWinner(TextView winner, Integer number, String name) {
         winner.setText(number.toString());
+        showDialogWinner(name);
+    }
+
+    private void showDialogWinner(String winner) {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(winner + " ganhou " + getResources().getString(R.string.winEmoji))
+                .setCancelable(true)
+                .setPositiveButton(R.string.okText, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        resetPoints();
+                        renderPoints();
+                    }
+                });
+        builder.create().show();
+    }
+
+    private void showDialogWarngGame() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.warnMessage)
+                .setCancelable(true)
+                .setPositiveButton(R.string.okText, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        return;
+                    }
+                });
+        builder.create().show();
     }
 
     private void resetPoints() {
@@ -195,9 +220,9 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
     public void showInput(int teamID, final StringWrapper previousName) {
         final TextView team = findViewById(teamID);
 
+        // set a dialog with input
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Mudar Nome");
-
         // set up the input
         final EditText input = new EditText(this);
         input.setInputType(InputType.TYPE_CLASS_TEXT);
