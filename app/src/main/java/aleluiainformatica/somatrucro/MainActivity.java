@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -33,6 +34,9 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.i(LOG_TAG, "load App");
+
+        // let screen turned on while the app is running in foreground
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         // initialize name with default values
         mNameLeftTeam = new StringWrapper(getResources().getString(R.string.nameLeftTeam));

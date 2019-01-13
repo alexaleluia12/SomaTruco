@@ -1,7 +1,4 @@
 #TODO
-
-- tela não pode apagar
-
 - limitar tamanho dos nomes das equipes (9 caracteres)
 - ads real
 - melhorar a logo
@@ -16,3 +13,4 @@
 - falar quem ganhou (dialogo)
 - zerar pontos (dialogo)
 - app nao pode ser rotacionado
+- tela não apaga
