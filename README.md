@@ -1,7 +1,12 @@
 #TODO
+- zerar pontos
+- limitar tamanho dos nomes das equipes
+- logica dos pontos
+- ads real
+- melhorar a logo
+- publicar na play store
+
+#DONE
 - tirar estilo duplicados
 - add logo
-- adicionar botaõ de config e ações correspondentes
-- logica
-- ads real
-- publicar na play store
+- adicionar botão de config

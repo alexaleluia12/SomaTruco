@@ -2,4 +2,8 @@
     <string name="app_name">SomaTrucro</string>
 
     <string name="AD_ID_BANNER">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="nameLeftTeam">Time A</string>
+    <string name="nameRightTeam">Time B</string>
+    <string name="actionReset">Zerar</string>
+
 </resources>
