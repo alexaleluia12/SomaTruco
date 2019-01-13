@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenuItemClickListener {
@@ -27,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
 
 
     private static final Integer LIMIT_WIN = 12;
+    private static final Integer NAME_SIZE = 9;
 
 
     @Override
@@ -84,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
                 mPointsLeft -= 1;
                 updateLeftSide();
             }
+
         });
         // right
         plus3Right.setOnClickListener(new View.OnClickListener() {
@@ -253,6 +256,10 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
         }
     }
 
+    private void showToastsMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+
     public void showInput(int teamID, final StringWrapper previousName) {
         final TextView team = findViewById(teamID);
 
@@ -266,16 +273,24 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
         builder.setView(input);
 
         // set up buttons actions
-        builder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 String digitado = input.getText().toString();
-                team.setText(digitado);
-                previousName.setValue(digitado);
-                Log.i(LOG_TAG, "digitou: " + digitado);
+                if (digitado.length() > NAME_SIZE) {
+                    String message = "Tamanho max de " + NAME_SIZE;
+                    showToastsMessage(message);
+                } else  if (digitado.trim().length() == 0) {
+                    showToastsMessage("Digite o Nome por favor");
+                } else {
+                    team.setText(digitado);
+                    previousName.setValue(digitado);
+                }
+
+
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.cancel();

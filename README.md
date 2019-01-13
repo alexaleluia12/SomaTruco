@@ -1,5 +1,4 @@
 #TODO
-- limitar tamanho dos nomes das equipes (9 caracteres)
 - ads real
 - melhorar a logo
 - publicar na play store
@@ -14,3 +13,4 @@
 - zerar pontos (dialogo)
 - app nao pode ser rotacionado
 - tela não apaga
+- limitar tamanho dos nomes das equipes (9 caracteres)
