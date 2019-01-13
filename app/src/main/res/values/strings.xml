@@ -9,5 +9,7 @@
     <string name="winEmoji">🎉🎉🎉</string>
     <string name="warnMessage">Está de onze ⛔</string>
     <string name="okText">OK</string>
+    <string name="cancel">Cancelar</string>
+    <string name="resetAllQuestion">Deseja zerar tudo?</string>
 
 </resources>

@@ -1,6 +1,5 @@
 package aleluiainformatica.somatrucro;
 
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -14,8 +13,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenuItemClickListener {
@@ -167,6 +164,36 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
         builder.create().show();
     }
 
+    private void showDialogReset() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.resetAllQuestion)
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        return;
+                    }
+                })
+                .setPositiveButton(R.string.okText, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        resetAll();
+                    }
+                });
+        builder.create().show();
+    }
+
+
+
+    private void resetWins() {
+        mNumberWinsRight = 0;
+        mNumberWinsLeft = 0;
+    }
+
+    private void renderWins() {
+        mWinRight.setText(mNumberWinsRight.toString());
+        mWinLeft.setText(mNumberWinsLeft.toString());
+    }
+
     private void resetPoints() {
         mPointsLeft = 0;
         mPointsRight = 0;
@@ -175,6 +202,13 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
     private void renderPoints() {
         mPointsRightTeam.setText(mPointsRight.toString());
         mPointsLeftTeam.setText(mPointsLeft.toString());
+    }
+
+    private void resetAll() {
+        resetPoints();
+        resetWins();
+        renderPoints();
+        renderWins();
     }
 
     // pop-up menu
@@ -208,9 +242,7 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
                 showInput(R.id.RightTeam, mNameRightTeam);
                 return true;
             case R.id.menuActionReset:
-                // TODO: falta completar
-                Log.w(LOG_TAG, "Action Nao fieta");
-                // Perguntar se deseja reamente zerar todo os pontos e comecar nova partida
+                showDialogReset();
                 return true;
             default:
                 return false;
