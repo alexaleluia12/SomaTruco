@@ -13,16 +13,6 @@
 
     >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="total: x"
-        android:layout_centerInParent="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="8dp"
-        android:textSize="18sp"
-        />
-
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -65,18 +55,20 @@
                     android:id="@+id/circleLeft"
                     android:layout_below="@+id/LeftTeam"
                     android:background="@drawable/circle_black"
-                    android:text="6"
+                    android:text="@string/startNumber"
                     style="@style/PointArea"/>
 
 
                 <TextView
+                    android:id="@+id/winsLeft"
                     android:layout_below="@+id/circleLeft"
-                    android:text="venceu X"
+                    android:text="@string/startNumber"
                     style="@style/TeamPoints"/>
 
 
                 <Button
-                    android:layout_above="@+id/LeftButtonPlus"
+                    android:id="@+id/leftButton3Plus"
+                    android:layout_above="@+id/leftButtonPlus"
                     android:text="+3"
                     style="@style/Button"
                     android:layout_marginBottom="8dp"
@@ -87,8 +79,8 @@
                      />
 
                 <Button
-                    android:id="@+id/LeftButtonPlus"
-                    android:layout_above="@+id/LeftButtonMinus"
+                    android:id="@+id/leftButtonPlus"
+                    android:layout_above="@+id/leftButtonMinus"
                     android:text="+1"
                     style="@style/Button"
                     android:layout_alignParentRight="true"
@@ -100,7 +92,7 @@
                     />
 
                 <Button
-                    android:id="@+id/LeftButtonMinus"
+                    android:id="@+id/leftButtonMinus"
                     android:text="-1"
                     style="@style/Button"
                     android:layout_alignParentBottom="true"
@@ -132,21 +124,23 @@
                     />
 
                 <TextView
-                    android:id="@+id/RightCircle"
+                    android:id="@+id/circleRight"
                     android:layout_below="@+id/RightTeam"
                     android:background="@drawable/circle_red"
-                    android:text="7"
+                    android:text="@string/startNumber"
                     style="@style/PointArea"
                     >
                 </TextView>
 
                 <TextView
-                    android:layout_below="@+id/RightCircle"
-                    android:text="venceu X"
+                    android:id="@+id/winsRight"
+                    android:layout_below="@+id/circleRight"
+                    android:text="@string/startNumber"
                     style="@style/TeamPoints"/>
 
                 <Button
-                    android:layout_above="@+id/RigthButtonPlus"
+                    android:id="@+id/rightButton3Plus"
+                    android:layout_above="@+id/rightButtonPlus"
                     android:text="+3"
                     style="@style/Button"
                     android:layout_alignParentRight="true"
@@ -155,13 +149,11 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginBottom="8dp"
                     android:background="@color/colorRed"
-
-
                     />
 
                 <Button
-                    android:id="@+id/RigthButtonPlus"
-                    android:layout_above="@+id/RigthButtonMinus"
+                    android:id="@+id/rightButtonPlus"
+                    android:layout_above="@+id/rightButtonMinus"
                     android:text="+1"
                     style="@style/Button"
                     android:layout_marginLeft="32dp"
@@ -171,7 +163,7 @@
                     />
 
                 <Button
-                    android:id="@+id/RigthButtonMinus"
+                    android:id="@+id/rightButtonMinus"
                     android:text="-1"
                     style="@style/Button"
                     android:background="@color/colorRed"
