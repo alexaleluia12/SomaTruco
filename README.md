@@ -1,6 +1,6 @@
 #TODO
 - ads real
-- melhorar a logo
+- testar
 - publicar na play store
 
 #DONE
@@ -14,3 +14,4 @@
 - app nao pode ser rotacionado
 - tela não apaga
 - limitar tamanho dos nomes das equipes (9 caracteres)
+- melhorar a logo
