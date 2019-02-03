@@ -1,7 +1,11 @@
 #TODO
+
+
 - ads real
-- testar
+- testar en diferentes telas
 - publicar na play store
+- melhorar o codigo
+- escrever em Kotilin
 
 #DONE
 - tirar estilo duplicados
@@ -15,3 +19,4 @@
 - tela não apaga
 - limitar tamanho dos nomes das equipes (9 caracteres)
 - melhorar a logo
+- na edicao do nome mostrar quantos caracteres pode digitar

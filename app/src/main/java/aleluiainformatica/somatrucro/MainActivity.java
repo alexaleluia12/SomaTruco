@@ -1,12 +1,17 @@
 package aleluiainformatica.somatrucro;
 
 import android.content.DialogInterface;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.PopupMenu;
+import android.text.Editable;
+import android.text.InputFilter;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
     private TextView mWinLeft, mWinRight;
     private Integer mNumberWinsLeft = 0, mNumberWinsRight = 0;
     private Integer mPointsLeft = 0, mPointsRight = 0;
+    private Integer mNameSize = 0;
 
 
     private static final Integer LIMIT_WIN = 12;
@@ -43,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
         // initialize name with default values
         mNameLeftTeam = new StringWrapper(getResources().getString(R.string.nameLeftTeam));
         mNameRightTeam = new StringWrapper(getResources().getString(R.string.nameRightTeam));
+
 
         // where count points
         mPointsLeftTeam = findViewById(R.id.circleLeft);
@@ -123,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
             setWinner(mWinLeft, mNumberWinsLeft, mNameLeftTeam.getValue());
         }
         if (mPointsLeft == LIMIT_WIN - 1) {
-            showDialogWarngGame();
+            showDialogWarningGame();
         }
         mPointsLeftTeam.setText(String.format("%d", mPointsLeft));
     }
@@ -134,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
             setWinner(mWinRight, mNumberWinsRight, mNameRightTeam.getValue());
         }
         if (mPointsRight == LIMIT_WIN - 1) {
-            showDialogWarngGame();
+            showDialogWarningGame();
         }
         mPointsRightTeam.setText(String.format("%d", mPointsRight));
     }
@@ -147,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
     private void showDialogWinner(String winner) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(winner + " ganhou " + getResources().getString(R.string.winEmoji))
-                .setCancelable(true)
+                .setCancelable(false) // forca a clicar em ok
                 .setPositiveButton(R.string.okText, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -158,17 +165,8 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
         builder.create().show();
     }
 
-    private void showDialogWarngGame() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(R.string.warnMessage)
-                .setCancelable(true)
-                .setPositiveButton(R.string.okText, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        return;
-                    }
-                });
-        builder.create().show();
+    private void showDialogWarningGame() {
+        showToastsMessageCenter("Está de onze");
     }
 
     private void showDialogReset() {
@@ -186,6 +184,7 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
                         resetAll();
                     }
                 });
+
         builder.create().show();
     }
 
@@ -220,7 +219,7 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
 
     // pop-up menu
     // https://developer.android.com/guide/topics/ui/menus#PopupMenu
-    // metodo chamada na activity_main
+    // metodo chamado na activity_main
     public void showMenu(View v) {
         PopupMenu popup = new PopupMenu(this, v);
         popup.setOnMenuItemClickListener(this);
@@ -259,17 +258,74 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
     private void showToastsMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
+    // show toast at center
+    private void showToastsMessageCenter(String message) {
+        Toast toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
+
+    }
+    private void showToastsMessageTop(String message) {
+        Toast toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.TOP, 0, 0);
+        toast.show();
+
+    }
 
     public void showInput(int teamID, final StringWrapper previousName) {
         final TextView team = findViewById(teamID);
 
         // set a dialog with input
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Mudar Nome");
+        ConstraintLayout custonTitle = (ConstraintLayout) getLayoutInflater().inflate(R.layout.dialog_tile, null);
+        builder.setCustomTitle(custonTitle);
+
+        // get typed count reference
+        final TextView countName = custonTitle.findViewById(R.id.nameSize);
+
+        // poderia inflar o input (teria um xml apenas para essa entrada)
+        // TextView myText = (TextView)getLayoutInflater().inflate(R.layout.tvtemplate, null);
         // set up the input
         final EditText input = new EditText(this);
+        // add padding
+        input.setPadding(40, 12, 40, 18);
+        input.setFocusable(true); // define focus no texto
+        input.setSelectAllOnFocus(true); // select all text
+        input.setBackground(null); // remove underline
+
+        // set previous value
         input.setInputType(InputType.TYPE_CLASS_TEXT);
         input.setText(previousName.getValue());
+        // set limit on inputText (over xml is just android:maxLength="10")
+        input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(NAME_SIZE)});
+
+        // numeber of char that can type
+        Integer availabeText = NAME_SIZE - previousName.getValue().length();
+        countName.setText("(" + availabeText.toString() + ")");
+
+        // adicona watcher editText para saber o tamanho que pode digitar
+        input.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.length() >= 9) {
+                    showToastsMessageTop("Máx " + NAME_SIZE);
+                }
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                Integer availabeText = NAME_SIZE - editable.length();
+                countName.setText("(" + availabeText.toString() + ")");
+            }
+        });
+
+
+
         builder.setView(input);
 
         // set up buttons actions
@@ -280,7 +336,7 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
                 if (digitado.length() > NAME_SIZE) {
                     String message = "Tamanho max de " + NAME_SIZE;
                     showToastsMessage(message);
-                } else  if (digitado.trim().length() == 0) {
+                } else if (digitado.trim().length() == 0) {
                     showToastsMessage("Digite o Nome por favor");
                 } else {
                     team.setText(digitado);
