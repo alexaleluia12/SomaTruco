@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
     private TextView mWinLeft, mWinRight;
     private Integer mNumberWinsLeft = 0, mNumberWinsRight = 0;
     private Integer mPointsLeft = 0, mPointsRight = 0;
-    private Integer mNameSize = 0;
 
 
     private static final Integer LIMIT_WIN = 12;
@@ -147,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
     }
 
     private void setWinner(TextView winner, Integer number, String name) {
-        winner.setText(number.toString());
+        winner.setText(String.format("%d", number));
         showDialogWinner(name);
     }
 
@@ -166,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
     }
 
     private void showDialogWarningGame() {
-        showToastsMessageCenter("Está de onze");
+        showToastsMessageCenter(getResources().getString(R.string.warnMessage));
     }
 
     private void showDialogReset() {
@@ -175,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        return;
+
                     }
                 })
                 .setPositiveButton(R.string.okText, new DialogInterface.OnClickListener() {
@@ -196,8 +195,8 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
     }
 
     private void renderWins() {
-        mWinRight.setText(mNumberWinsRight.toString());
-        mWinLeft.setText(mNumberWinsLeft.toString());
+        mWinRight.setText(String.format("%d", mNumberWinsRight));
+        mWinLeft.setText(String.format("%d", mNumberWinsLeft));
     }
 
     private void resetPoints() {
@@ -206,8 +205,8 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
     }
 
     private void renderPoints() {
-        mPointsRightTeam.setText(mPointsRight.toString());
-        mPointsLeftTeam.setText(mPointsLeft.toString());
+        mPointsRightTeam.setText(String.format("%d", mPointsRight));
+        mPointsLeftTeam.setText(String.format("%d", mPointsLeft));
     }
 
     private void resetAll() {
@@ -301,7 +300,8 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
 
         // numeber of char that can type
         Integer availabeText = NAME_SIZE - previousName.getValue().length();
-        countName.setText("(" + availabeText.toString() + ")");
+        final String pattern = getResources().getString(R.string.availableSpace);
+        countName.setText(String.format(pattern, availabeText));
 
         // estudar esse textWatcher - https://developer.android.com/reference/android/text/TextWatcher.html
         // adicona watcher editText para saber o tamanho que pode digitar
@@ -327,13 +327,9 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
             @Override
             public void afterTextChanged(Editable editable) {
                 Log.i(LOG_TAG, "after - " + editable.length() + ";" + editable.toString());
-                Integer availabeText = NAME_SIZE - editable.length();
-                countName.setText("(" + availabeText.toString() + ")");
+                Integer availableText = NAME_SIZE - editable.length();
+                countName.setText(String.format(pattern, availableText));
             }
-            /**
-             * before -> after
-             * on -> count
-             */
         });
 
 
@@ -374,15 +370,15 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
 class StringWrapper {
     private String value;
 
-    public StringWrapper(String value) {
+    StringWrapper(String value) {
         this.value = value;
     }
 
-    public String getValue() {
+    String getValue() {
         return value;
     }
 
-    public void setValue(String value) {
+    void setValue(String value) {
         this.value = value;
     }
 
