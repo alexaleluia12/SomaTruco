@@ -303,25 +303,37 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
         Integer availabeText = NAME_SIZE - previousName.getValue().length();
         countName.setText("(" + availabeText.toString() + ")");
 
+        // estudar esse textWatcher - https://developer.android.com/reference/android/text/TextWatcher.html
         // adicona watcher editText para saber o tamanho que pode digitar
         input.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (charSequence.length() >= 9) {
+            public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
+                Log.i(LOG_TAG, "T=before; start=" + start + "; count = " + count + "; after = " + after);
+                // T=before; start=5; count = 4; after = 3
+                // quando deleto count fica maior que after
+                // quando adiciono count fica igual ao after
+                // so mostra mensagem quando tenta adiconar mais de NAME_SIZE
+                // lembrando que o campo de input tem um litite maximo de NAME_SIZE
+                if (start + after == NAME_SIZE && count == after) {
                     showToastsMessageTop("Máx " + NAME_SIZE);
                 }
             }
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                Log.i(LOG_TAG, "on; start=" + start + "; count = " + count + "; before = " + before);
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
+                Log.i(LOG_TAG, "after - " + editable.length() + ";" + editable.toString());
                 Integer availabeText = NAME_SIZE - editable.length();
                 countName.setText("(" + availabeText.toString() + ")");
             }
+            /**
+             * before -> after
+             * on -> count
+             */
         });
 
 
