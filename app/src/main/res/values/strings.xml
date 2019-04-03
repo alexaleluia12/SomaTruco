@@ -20,7 +20,6 @@
     <!--Positive action title for save the team name-->
     <string name="save">Save</string>
     <!--Dialog confirm message before clear all score and win points-->
-    <string name="resetAllQuestion">Clear everything?</string>
     <!--Show on custom dialog to display available characters to be typed-->
     <string name="availableSpace">(%1$d)</string>
     <!--Toast message, launched after text reach maximum value-->
@@ -29,4 +28,5 @@
     <string name="toast_required_message">Type a name please</string>
     <!--Title of dialog_title.xml-->
     <string name="dialog_title_change_name">Change Name</string>
+    <string name="resetAllQuestion">Clear everything?</string>
 </resources>
