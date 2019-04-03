@@ -75,6 +75,22 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
         appState.setLeftTeam(leftTeam);
         appState.setRightTeam(rightTeam);
 
+        // launch dialog to change the name if click over it
+        TextView titleLeftTeam = findViewById(R.id.LeftTeam);
+        titleLeftTeam.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showInput(view.getId(), leftTeam);
+            }
+        });
+        TextView titleRightTeam = findViewById(R.id.RightTeam);
+        titleRightTeam.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showInput(view.getId(), rightTeam);
+            }
+        });
+
     }
 
     // lifecycle method
@@ -95,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
 
         Log.i(LOG_TAG, "onRestore");
     }
-
+    // lifecycle method
     @Override
     protected void onResume() {
         super.onResume();
@@ -124,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
         rightTeam.setWins(winsRightTeam);
         rightTeam.renderUiWinElement();
     }
-
+    // lifecycle method
     @Override
     protected void onStop() {
         super.onStop();
@@ -253,6 +269,7 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
         toast.show();
     }
 
+    // FIXME(Alex) method too big
     public void showInput(int teamID, final Team team) {
         final TextView uiTeam = findViewById(teamID);
 
@@ -313,14 +330,14 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
         builder.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                String digitado = input.getText().toString();
-                if (digitado.length() > AppConfig.LIMIT_NAME) {
+                String entryText = input.getText().toString();
+                if (entryText.length() > AppConfig.LIMIT_NAME) {
                     showToastsMessage(getString(R.string.max_toast_message, AppConfig.LIMIT_NAME));
-                } else if (digitado.trim().length() == 0) {
+                } else if (entryText.trim().length() == 0) {
                     showToastsMessageTop(getString(R.string.toast_required_message));
                 } else {
-                    uiTeam.setText(digitado);
-                    team.setName(digitado);
+                    uiTeam.setText(entryText);
+                    team.setName(entryText);
                 }
             }
         });

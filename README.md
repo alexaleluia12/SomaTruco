@@ -1,6 +1,4 @@
 #TODO
-- internacionalização (en, pt, es, fr)
-- liberar a edição do nome quando clicar em cima do nome
 - testar en diferentes telas
 - ads real
 - publicar na play store
@@ -21,6 +19,8 @@
 - na edicao do nome mostrar quantos caracteres pode digitar
 - adicionar lifecycle
 - melhorar codigo
+- internacionalização (en, pt, es)
+- liberar a edição do nome quando clicar em cima do nome
 
 #NOTE
 app suporta apenas truco paulista
