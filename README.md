@@ -1,6 +1,6 @@
-# TODO
-- melhorar codigo
+#TODO
 - internacionalização (en, pt, es, fr)
+- liberar a edição do nome quando clicar em cima do nome
 - testar en diferentes telas
 - ads real
 - publicar na play store
@@ -20,6 +20,7 @@
 - melhorar a logo
 - na edicao do nome mostrar quantos caracteres pode digitar
 - adicionar lifecycle
+- melhorar codigo
 
 #NOTE
 app suporta apenas truco paulista

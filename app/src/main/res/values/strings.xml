@@ -1,17 +1,32 @@
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!--App Name should not be translated-->
     <string name="app_name">SomaTrucro</string>
-
-    <string name="AD_ID_BANNER">ca-app-pub-3940256099942544/6300978111</string>
-    <string name="nameLeftTeam">Time A</string>
-    <string name="nameRightTeam">Time B</string>
-    <string name="actionReset">Zerar</string>
+    <!--Default team a name-->
+    <string name="nameLeftTeam">Team A</string>
+    <!--Default team b name-->
+    <string name="nameRightTeam">Team B</string>
+    <!--Menu clear title-->
+    <string name="actionReset">Clear</string>
+    <!--Start cores/wins-->
     <string name="startNumber">0</string>
-    <string name="winEmoji">🎉🎉🎉</string>
-    <string name="warnMessage">Está de onze ⛔</string>
+    <!--Thanks for win the game-->
+    <string name="winEmoji"><xliff:g id="nameWhoWing" example="Team A">%s</xliff:g> win! 🎉🎉🎉</string>
+    <!--Warning tile message after any team reach eleven points-->
+    <string name="warnMessage">Now is eleven ⛔</string>
+    <!--Positive action title for clear team score and wins-->
     <string name="okText">OK</string>
-    <string name="cancel">Cancelar</string>
-    <string name="save">Salvar</string>
-    <string name="resetAllQuestion">Deseja zerar tudo?</string>
+    <!--Negative action title save team/clear points-->
+    <string name="cancel">Cancel</string>
+    <!--Positive action title for save the team name-->
+    <string name="save">Save</string>
+    <!--Dialog confirm message before clear all score and win points-->
+    <string name="resetAllQuestion">Clear everything?</string>
+    <!--Show on custom dialog to display available characters to be typed-->
     <string name="availableSpace">(%1$d)</string>
-
+    <!--Toast message, launched after text reach maximum value-->
+    <string name="max_toast_message">Max <xliff:g id="max_toast_message_number">%d</xliff:g></string>
+    <!--Required toas message, launched after save empty name for team-->
+    <string name="toast_required_message">Type a name please</string>
+    <!--Title of dialog_title.xml-->
+    <string name="dialog_title_change_name">Change Name</string>
 </resources>

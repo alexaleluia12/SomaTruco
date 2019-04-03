@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
     // --- new code ---
     private Team leftTeam;
     private Team rightTeam;
-    private AppStateSingleton appState;
 
 
     @Override
@@ -50,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
         // let screen turned on while the app is running in foreground
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        appState = AppStateSingleton.getInstance();
+        AppState appState = new AppState();
 
         leftTeam = new Team(
                 "",
@@ -293,19 +292,16 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
             public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
 
                 if (start + after == AppConfig.LIMIT_NAME && count == after) {
-                    // FIXME(Alex) hardcode runtime message
-                    showToastsMessageTop("Máx " + AppConfig.LIMIT_NAME);
+                    showToastsMessageTop(getString(R.string.max_toast_message, AppConfig.LIMIT_NAME));
                 }
             }
 
             @Override
             public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-                Log.i(LOG_TAG, "on; start=" + start + "; count = " + count + "; before = " + before);
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-                Log.i(LOG_TAG, "after - " + editable.length() + ";" + editable.toString());
                 Integer availableText = AppConfig.LIMIT_NAME - editable.length();
                 countName.setText(String.format(pattern, availableText));
             }
@@ -315,16 +311,14 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
         builder.setView(input);
 
         // set up buttons actions
-        // FIXME(Alex) hardcode runtime message
         builder.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 String digitado = input.getText().toString();
                 if (digitado.length() > AppConfig.LIMIT_NAME) {
-                    String message = "Tamanho max de " + AppConfig.LIMIT_NAME;
-                    showToastsMessage(message);
+                    showToastsMessage(getString(R.string.max_toast_message, AppConfig.LIMIT_NAME));
                 } else if (digitado.trim().length() == 0) {
-                    showToastsMessage("Digite o Nome por favor");
+                    showToastsMessageTop(getString(R.string.toast_required_message));
                 } else {
                     uiTeam.setText(digitado);
                     team.setName(digitado);

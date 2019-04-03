@@ -40,9 +40,9 @@ public class Team implements View.OnClickListener {
      */
     private TextView uiWinsCount;
 
-    private AppStateSingleton appState;
+    private AppState appState;
 
-    public Team(String name, int score, TextView uiCore, TextView uiWinsCount, AppStateSingleton appState) {
+    public Team(String name, int score, TextView uiCore, TextView uiWinsCount, AppState appState) {
         this.name = name;
         this.score = score;
         this.uiCore = uiCore;
@@ -50,17 +50,17 @@ public class Team implements View.OnClickListener {
         this.appState = appState;
     }
 
-    public void setPlusThreeId(Button plusThreeButton) {
+    void setPlusThreeId(Button plusThreeButton) {
         plusThreeId = plusThreeButton.getId();
         plusThreeButton.setOnClickListener(this);
     }
 
-    public void setPlusOneId(Button plusOneButton) {
+    void setPlusOneId(Button plusOneButton) {
         plusOneId = plusOneButton.getId();
         plusOneButton.setOnClickListener(this);
     }
 
-    public void setMinusOneId(Button minusOneButton) {
+    void setMinusOneId(Button minusOneButton) {
         minusOneId = minusOneButton.getId();
         minusOneButton.setOnClickListener(this);
     }
@@ -93,20 +93,17 @@ public class Team implements View.OnClickListener {
         uiCore.setText(numberFormat.format(score));
     }
 
-
-
     private void showAlertWinner() {
         Context context = appState.getAppContext();
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        // FIXME(Alex) hardcode runtime message
-        builder.setMessage(name + " ganhou " + context.getString(R.string.winEmoji))
-                .setCancelable(false) // force clic on ok
+        builder.setMessage(context.getString(R.string.winEmoji, name))
+                .setCancelable(false) // force click on ok
                 .setPositiveButton(R.string.okText, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        appState.getLeftTeam().resetSocore();
-                        appState.getRightTeam().resetSocore();
+                        appState.getLeftTeam().resetScore();
+                        appState.getRightTeam().resetScore();
 
                         appState.getRightTeam().renderUiScoreElement();
                         appState.getLeftTeam().renderUiScoreElement();
@@ -120,7 +117,7 @@ public class Team implements View.OnClickListener {
 
         checkAndChangeWins();
         if (score >= AppConfig.LIMIT_WIN) {
-            resetSocore();
+            resetScore();
             renderUiWinElement();
             showAlertWinner();
         }
@@ -134,46 +131,43 @@ public class Team implements View.OnClickListener {
         showToastsMessageCenter(appState.getAppContext().getString(R.string.warnMessage));
     }
 
-    public void resetSocore() {
+    void resetScore() {
         score = 0;
     }
 
-    public void resetWins() {
+    void resetWins() {
         winsCount = 0;
     }
 
-    public void resetAll() {
-        resetSocore();
+    void resetAll() {
+        resetScore();
         resetWins();
     }
 
-    public int getScore() {
+    int getScore() {
         return score;
     }
 
-    public void setScore(int score) {
+    void setScore(int score) {
         this.score = score;
     }
 
-    public String getName() {
+    String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    void setName(String name) {
         this.name = name;
     }
 
-    public int getWins() {
+    int getWins() {
         return winsCount;
     }
     
-    public void setWins(int winsNumber) {
+    void setWins(int winsNumber) {
         winsCount = winsNumber;
     }
 
-    private void showToastsMessage(String message) {
-        Toast.makeText(appState.getAppContext(), message, Toast.LENGTH_LONG).show();
-    }
     // show toast at center
     private void showToastsMessageCenter(String message) {
         Toast toast = Toast.makeText(appState.getAppContext(), message, Toast.LENGTH_SHORT);
@@ -181,13 +175,6 @@ public class Team implements View.OnClickListener {
         toast.show();
 
     }
-    private void showToastsMessageTop(String message) {
-        Toast toast = Toast.makeText(appState.getAppContext(), message, Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.TOP, 0, 0);
-        toast.show();
-
-    }
-
 
     @Override
     public void onClick(View button) {

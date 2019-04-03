@@ -14,7 +14,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_weight="1"
-        android:text="Mudar Nome"
+        android:text="@string/dialog_title_change_name"
         android:textSize="21sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,7 +28,7 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="25dp"
         android:layout_weight="1"
-        android:text="(0)"
+        android:text="@string/availableSpace"
         android:textSize="16sp"
         app:layout_constraintStart_toEndOf="@+id/dialogTitle"
         app:layout_constraintTop_toTopOf="parent" />
