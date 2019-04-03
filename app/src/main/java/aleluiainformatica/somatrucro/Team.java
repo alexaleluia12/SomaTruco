@@ -83,10 +83,17 @@ public class Team implements View.OnClickListener {
         }
     }
 
-    private void updateUiWin() {
+    void renderUiWinElement() {
         NumberFormat numberFormat = NumberFormat.getNumberInstance();
         uiWinsCount.setText(numberFormat.format(winsCount));
     }
+
+    void renderUiScoreElement() {
+        NumberFormat numberFormat = NumberFormat.getNumberInstance();
+        uiCore.setText(numberFormat.format(score));
+    }
+
+
 
     private void showAlertWinner() {
         Context context = appState.getAppContext();
@@ -101,34 +108,26 @@ public class Team implements View.OnClickListener {
                         appState.getLeftTeam().resetSocore();
                         appState.getRightTeam().resetSocore();
 
-                        appState.getRightTeam().updateUiScore();
-                        appState.getLeftTeam().updateUiScore();
+                        appState.getRightTeam().renderUiScoreElement();
+                        appState.getLeftTeam().renderUiScoreElement();
                     }
                 });
         builder.create().show();
     }
 
     private void updateUiScore() {
-        NumberFormat numberFormat = NumberFormat.getNumberInstance();
-        uiCore.setText(numberFormat.format(score));
-
-        // update win ui
-        // check 11
-        // check 12
+        renderUiScoreElement();
 
         checkAndChangeWins();
         if (score >= AppConfig.LIMIT_WIN) {
             resetSocore();
-            updateUiWin();
-            // NOTE(Alex) recursion call updateUiScore and showAlertWinner
+            renderUiWinElement();
             showAlertWinner();
-
         }
 
         if (score == AppConfig.LIMIT_WIN - 1) {
             showDialogWarningGame();
         }
-
     }
 
     private void showDialogWarningGame() {
@@ -137,6 +136,15 @@ public class Team implements View.OnClickListener {
 
     public void resetSocore() {
         score = 0;
+    }
+
+    public void resetWins() {
+        winsCount = 0;
+    }
+
+    public void resetAll() {
+        resetSocore();
+        resetWins();
     }
 
     public int getScore() {

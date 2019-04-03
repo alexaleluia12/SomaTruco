@@ -330,36 +330,39 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
 
 
 
-    private void resetWins() {
-        mNumberWinsRight = 0;
-        mNumberWinsLeft = 0;
-    }
-
-    private void renderWins() {
-        mWinRight.setText(String.format("%d", mNumberWinsRight));
-        mWinLeft.setText(String.format("%d", mNumberWinsLeft));
-    }
-
-    private void resetPoints() {
-        mPointsLeft = 0;
-        mPointsRight = 0;
-    }
-
-    private void renderPoints() {
-        mPointsRightTeam.setText(String.format("%d", mPointsRight));
-        mPointsLeftTeam.setText(String.format("%d", mPointsLeft));
-    }
+//    private void resetWins() {
+//        mNumberWinsRight = 0;
+//        mNumberWinsLeft = 0;
+//    }
+//
+//    private void renderWins() {
+//        mWinRight.setText(String.format("%d", mNumberWinsRight));
+//        mWinLeft.setText(String.format("%d", mNumberWinsLeft));
+//    }
+//
+//    private void resetPoints() {
+//        mPointsLeft = 0;
+//        mPointsRight = 0;
+//    }
+//
+//    private void renderPoints() {
+//        mPointsRightTeam.setText(String.format("%d", mPointsRight));
+//        mPointsLeftTeam.setText(String.format("%d", mPointsLeft));
+//    }
 
     private void resetAll() {
-        resetPoints();
-        resetWins();
-        renderPoints();
-        renderWins();
+        leftTeam.resetAll();
+        rightTeam.resetAll();
+
+        leftTeam.renderUiScoreElement();
+        leftTeam.renderUiWinElement();
+        rightTeam.renderUiScoreElement();
+        rightTeam.renderUiWinElement();
     }
 
     // pop-up menu
     // https://developer.android.com/guide/topics/ui/menus#PopupMenu
-    // metodo chamado na activity_main
+    // method called on activity_main
     public void showMenu(View v) {
         PopupMenu popup = new PopupMenu(this, v);
         popup.setOnMenuItemClickListener(this);
@@ -381,11 +384,11 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menuLeftTeam:
-                // retorna true quando termina de processar o clique
-                showInput(R.id.LeftTeam, mNameLeftTeam);
+                // return true when finish click process
+                showInput(R.id.LeftTeam, leftTeam);
                 return true;
             case R.id.menuRightTeam:
-                showInput(R.id.RightTeam, mNameRightTeam);
+                showInput(R.id.RightTeam, rightTeam);
                 return true;
             case R.id.menuActionReset:
                 showDialogReset();
@@ -412,51 +415,46 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
 
     }
 
-    public void showInput(int teamID, final StringWrapper previousName) {
-        final TextView team = findViewById(teamID);
+    public void showInput(int teamID, final Team team) {
+        final TextView uiTeam = findViewById(teamID);
 
         // set a dialog with input
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        ConstraintLayout custonTitle = (ConstraintLayout) getLayoutInflater().inflate(R.layout.dialog_tile, null);
-        builder.setCustomTitle(custonTitle);
+        ConstraintLayout customTitle = (ConstraintLayout) getLayoutInflater().inflate(R.layout.dialog_tile, null);
+        builder.setCustomTitle(customTitle);
 
         // get typed count reference
-        final TextView countName = custonTitle.findViewById(R.id.nameSize);
+        final TextView countName = customTitle.findViewById(R.id.nameSize);
 
-        // poderia inflar o input (teria um xml apenas para essa entrada)
-        // TextView myText = (TextView)getLayoutInflater().inflate(R.layout.tvtemplate, null);
+        // could inflate the input (need an xml just for this input)
+        // TextView myText = (TextView)getLayoutInflater().inflate(R.layout.template, null);
         // set up the input
         final EditText input = new EditText(this);
         // add padding
         input.setPadding(40, 12, 40, 18);
-        input.setFocusable(true); // define focus no texto
+        input.setFocusable(true); // define focus no text
         input.setSelectAllOnFocus(true); // select all text
         input.setBackground(null); // remove underline
 
         // set previous value
         input.setInputType(InputType.TYPE_CLASS_TEXT);
-        input.setText(previousName.getValue());
+        input.setText(team.getName());
         // set limit on inputText (over xml is just android:maxLength="10")
         input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(NAME_SIZE)});
 
-        // numeber of char that can type
-        Integer availabeText = NAME_SIZE - previousName.getValue().length();
-        final String pattern = getResources().getString(R.string.availableSpace);
-        countName.setText(String.format(pattern, availabeText));
+        // number of char that can type
+        Integer availableText = NAME_SIZE - team.getName().length();
+        final String pattern = getString(R.string.availableSpace);
+        countName.setText(String.format(pattern, availableText));
 
-        // estudar esse textWatcher - https://developer.android.com/reference/android/text/TextWatcher.html
-        // adicona watcher editText para saber o tamanho que pode digitar
+        // textWatcher - https://developer.android.com/reference/android/text/TextWatcher.html
         input.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
-                Log.i(LOG_TAG, "T=before; start=" + start + "; count = " + count + "; after = " + after);
-                // T=before; start=5; count = 4; after = 3
-                // quando deleto count fica maior que after
-                // quando adiciono count fica igual ao after
-                // so mostra mensagem quando tenta adiconar mais de NAME_SIZE
-                // lembrando que o campo de input tem um litite maximo de NAME_SIZE
-                if (start + after == NAME_SIZE && count == after) {
-                    showToastsMessageTop("Máx " + NAME_SIZE);
+
+                if (start + after == AppConfig.LIMIT_NAME && count == after) {
+                    // FIXME(Alex) hardcode runtime message
+                    showToastsMessageTop("Máx " + AppConfig.LIMIT_NAME);
                 }
             }
 
@@ -478,6 +476,7 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
         builder.setView(input);
 
         // set up buttons actions
+        // FIXME(Alex) hardcode runtime message
         builder.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -488,8 +487,8 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
                 } else if (digitado.trim().length() == 0) {
                     showToastsMessage("Digite o Nome por favor");
                 } else {
-                    team.setText(digitado);
-                    previousName.setValue(digitado);
+                    uiTeam.setText(digitado);
+                    team.setName(digitado);
                 }
 
 
