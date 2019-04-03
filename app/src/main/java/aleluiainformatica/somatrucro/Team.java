@@ -1,8 +1,13 @@
 package aleluiainformatica.somatrucro;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.NumberFormat;
 
@@ -27,14 +32,22 @@ public class Team implements View.OnClickListener {
      */
     private int score = 0;
     /**
-     * ui element related with this team
+     * ui element related with score
      */
-    private TextView uiTarget;
+    private TextView uiCore;
+    /**
+     * ui element related with winsCount
+     */
+    private TextView uiWinsCount;
 
-    public Team(String name, int score, TextView uiTarget) {
+    private AppStateSingleton appState;
+
+    public Team(String name, int score, TextView uiCore, TextView uiWinsCount, AppStateSingleton appState) {
         this.name = name;
-        this.uiTarget = uiTarget;
         this.score = score;
+        this.uiCore = uiCore;
+        this.uiWinsCount = uiWinsCount;
+        this.appState = appState;
     }
 
     public void setPlusThreeId(Button plusThreeButton) {
@@ -70,9 +83,56 @@ public class Team implements View.OnClickListener {
         }
     }
 
-    private void updateTargetWithScore() {
+    private void updateUiWin() {
         NumberFormat numberFormat = NumberFormat.getNumberInstance();
-        uiTarget.setText(numberFormat.format(score));
+        uiWinsCount.setText(numberFormat.format(winsCount));
+    }
+
+    private void showAlertWinner() {
+        Context context = appState.getAppContext();
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        // FIXME(Alex) hardcode runtime message
+        builder.setMessage(name + " ganhou " + context.getString(R.string.winEmoji))
+                .setCancelable(false) // force clic on ok
+                .setPositiveButton(R.string.okText, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        appState.getLeftTeam().resetSocore();
+                        appState.getRightTeam().resetSocore();
+
+                        appState.getRightTeam().updateUiScore();
+                        appState.getLeftTeam().updateUiScore();
+                    }
+                });
+        builder.create().show();
+    }
+
+    private void updateUiScore() {
+        NumberFormat numberFormat = NumberFormat.getNumberInstance();
+        uiCore.setText(numberFormat.format(score));
+
+        // update win ui
+        // check 11
+        // check 12
+
+        checkAndChangeWins();
+        if (score >= AppConfig.LIMIT_WIN) {
+            resetSocore();
+            updateUiWin();
+            // NOTE(Alex) recursion call updateUiScore and showAlertWinner
+            showAlertWinner();
+
+        }
+
+        if (score == AppConfig.LIMIT_WIN - 1) {
+            showDialogWarningGame();
+        }
+
+    }
+
+    private void showDialogWarningGame() {
+        showToastsMessageCenter(appState.getAppContext().getString(R.string.warnMessage));
     }
 
     public void resetSocore() {
@@ -87,12 +147,33 @@ public class Team implements View.OnClickListener {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public int getWins() {
         return winsCount;
     }
     
     public void setWins(int winsNumber) {
         winsCount = winsNumber;
+    }
+
+    private void showToastsMessage(String message) {
+        Toast.makeText(appState.getAppContext(), message, Toast.LENGTH_LONG).show();
+    }
+    // show toast at center
+    private void showToastsMessageCenter(String message) {
+        Toast toast = Toast.makeText(appState.getAppContext(), message, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
+
+    }
+    private void showToastsMessageTop(String message) {
+        Toast toast = Toast.makeText(appState.getAppContext(), message, Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.TOP, 0, 0);
+        toast.show();
+
     }
 
 
@@ -109,6 +190,8 @@ public class Team implements View.OnClickListener {
             throw new RuntimeException("id for button " + currentButtonId + " is not expected");
         }
 
-        updateTargetWithScore();
+        updateUiScore();
     }
 }
+
+

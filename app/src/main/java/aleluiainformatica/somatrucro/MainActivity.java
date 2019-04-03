@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
     // --- new code ---
     private Team leftTeam;
     private Team rightTeam;
+    private AppStateSingleton appState;
 
 
     @Override
@@ -62,8 +63,20 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
         mNameLeftTeam = new StringWrapper("");
         mNameRightTeam = new StringWrapper("");
         // --- new code ---
-        leftTeam = new Team("", 0, (TextView) findViewById(R.id.circleLeft));
-        rightTeam = new Team("", 0, (TextView) findViewById(R.id.circleRight));
+        appState = AppStateSingleton.getInstance();
+
+        leftTeam = new Team(
+                "",
+                0,
+                (TextView) findViewById(R.id.circleLeft),
+                (TextView) findViewById(R.id.winsLeft),
+                appState);
+        rightTeam = new Team(
+                "",
+                0,
+                (TextView) findViewById(R.id.circleRight),
+                (TextView) findViewById(R.id.winsRight),
+                appState);
 
         leftTeam.setPlusThreeId((Button) findViewById(R.id.leftButton3Plus));
         leftTeam.setPlusOneId((Button) findViewById(R.id.leftButtonPlus));
@@ -72,6 +85,10 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
         rightTeam.setPlusThreeId((Button) findViewById(R.id.rightButton3Plus));
         rightTeam.setPlusOneId((Button) findViewById(R.id.rightButtonPlus));
         rightTeam.setMinusOneId((Button) findViewById(R.id.rightButtonMinus));
+        // FIXME(Alex) team and appState on require reference to other
+        appState.setAppContext(this);
+        appState.setLeftTeam(leftTeam);
+        appState.setRightTeam(rightTeam);
 
 
         // --- end new code ---
@@ -143,10 +160,10 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
 //                updateRightSide();
 //            }
 //        });
-
-        // show number of wins end with
-        mWinLeft = findViewById(R.id.winsLeft);
-        mWinRight = findViewById(R.id.winsRight);
+//
+//        // show number of wins end with
+//        mWinLeft = findViewById(R.id.winsLeft);
+//        mWinRight = findViewById(R.id.winsRight);
     }
 
     // lifecycle method
@@ -181,11 +198,14 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
         String nameLeftTeam = settings.getString(NAME_TEAM_LEFT, defaultNameLeftTeam);
         mNameLeftTeam.setValue(nameLeftTeam);
         setTextViewValue(R.id.LeftTeam, nameLeftTeam);
+        appState.getLeftTeam().setName(nameLeftTeam);
+
 
         String defaultNameRightTeam = getString(R.string.nameRightTeam);
         String nameRightTeam = settings.getString(NAME_TEAM_RIGHT, defaultNameRightTeam);
         mNameRightTeam.setValue(nameRightTeam);
         setTextViewValue(R.id.RightTeam, nameRightTeam);
+        appState.getRightTeam().setName(nameRightTeam);
         Log.i(LOG_TAG, "lefTeam name: " + mNameLeftTeam);
 
         // wins
@@ -243,51 +263,51 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
         mPointsRight = savedInstanceState.getInt(POINTS_RIGHT_TEAM, 0);
     }
 
-    private void updateLeftSide() {
-        if (mPointsLeft >= LIMIT_WIN) {
-            // left win a global point (tento)
-            mNumberWinsLeft += 1;
-            setWinner(mWinLeft, mNumberWinsLeft, mNameLeftTeam.getValue());
-        }
-        if (mPointsLeft == LIMIT_WIN - 1) {
-            showDialogWarningGame();
-        }
-        mPointsLeftTeam.setText(String.format("%d", mPointsLeft));
-    }
+//    private void updateLeftSide() {
+//        if (mPointsLeft >= LIMIT_WIN) {
+//            // left win a global point (tento)
+//            mNumberWinsLeft += 1;
+//            setWinner(mWinLeft, mNumberWinsLeft, mNameLeftTeam.getValue());
+//        }
+//        if (mPointsLeft == LIMIT_WIN - 1) {
+//            showDialogWarningGame();
+//        }
+//        mPointsLeftTeam.setText(String.format("%d", mPointsLeft));
+//    }
 
-    private void updateRightSide() {
-        if (mPointsRight >= LIMIT_WIN) {
-            mNumberWinsRight += 1;
-            setWinner(mWinRight, mNumberWinsRight, mNameRightTeam.getValue());
-        }
-        if (mPointsRight == LIMIT_WIN - 1) {
-            showDialogWarningGame();
-        }
-        mPointsRightTeam.setText(String.format("%d", mPointsRight));
-    }
+//    private void updateRightSide() {
+//        if (mPointsRight >= LIMIT_WIN) {
+//            mNumberWinsRight += 1;
+//            setWinner(mWinRight, mNumberWinsRight, mNameRightTeam.getValue());
+//        }
+//        if (mPointsRight == LIMIT_WIN - 1) {
+//            showDialogWarningGame();
+//        }
+//        mPointsRightTeam.setText(String.format("%d", mPointsRight));
+//    }
 
-    private void setWinner(TextView winner, Integer number, String name) {
-        winner.setText(String.format("%d", number));
-        showDialogWinner(name);
-    }
+//    private void setWinner(TextView winner, Integer number, String name) {
+//        winner.setText(String.format("%d", number));
+//        showDialogWinner(name);
+//    }
 
-    private void showDialogWinner(String winner) {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(winner + " ganhou " + getResources().getString(R.string.winEmoji))
-                .setCancelable(false) // forca a clicar em ok
-                .setPositiveButton(R.string.okText, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        resetPoints();
-                        renderPoints();
-                    }
-                });
-        builder.create().show();
-    }
+//    private void showDialogWinner(String winner) {
+//        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setMessage(winner + " ganhou " + getResources().getString(R.string.winEmoji))
+//                .setCancelable(false) // forca a clicar em ok
+//                .setPositiveButton(R.string.okText, new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        resetPoints();
+//                        renderPoints();
+//                    }
+//                });
+//        builder.create().show();
+//    }
 
-    private void showDialogWarningGame() {
-        showToastsMessageCenter(getResources().getString(R.string.warnMessage));
-    }
+//    private void showDialogWarningGame() {
+//        showToastsMessageCenter(getResources().getString(R.string.warnMessage));
+//    }
 
     private void showDialogReset() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -379,12 +399,12 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
     // show toast at center
-    private void showToastsMessageCenter(String message) {
-        Toast toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.CENTER, 0, 0);
-        toast.show();
-
-    }
+//    private void showToastsMessageCenter(String message) {
+//        Toast toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
+//        toast.setGravity(Gravity.CENTER, 0, 0);
+//        toast.show();
+//
+//    }
     private void showToastsMessageTop(String message) {
         Toast toast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.TOP, 0, 0);
