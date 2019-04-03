@@ -1,10 +1,9 @@
-#TODO
-
-
-- ads real
+# TODO
+- melhorar codigo
+- internacionalização (en, pt, es, fr)
 - testar en diferentes telas
+- ads real
 - publicar na play store
-- melhorar o codigo
 - escrever em Kotilin
 
 #DONE
@@ -20,3 +19,7 @@
 - limitar tamanho dos nomes das equipes (9 caracteres)
 - melhorar a logo
 - na edicao do nome mostrar quantos caracteres pode digitar
+- adicionar lifecycle
+
+#NOTE
+app suporta apenas truco paulista

@@ -1,6 +1,8 @@
 package aleluiainformatica.somatrucro;
 
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -31,6 +33,13 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
     private Integer mNumberWinsLeft = 0, mNumberWinsRight = 0;
     private Integer mPointsLeft = 0, mPointsRight = 0;
 
+    private static final String POINTS_LEFT_TEAM = "POINTS_LEFT_TEAM";
+    private static final String POINTS_RIGHT_TEAM = "POINTS_RIGHT_TEAM";
+    private static final String WINS_LEFT_TEAM = "WINS_LEFT_TEAM";
+    private static final String WINS_RIGHT_TEAM = "WINS_RIGHT_TEAM";
+    private static final String NAME_TEAM_LEFT = "TEAM_LEFT_NAME";
+    private static final String NAME_TEAM_RIGHT = "TEAM_RIGHT_NAME";
+
 
     private static final Integer LIMIT_WIN = 12;
     private static final Integer NAME_SIZE = 9;
@@ -41,13 +50,14 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.i(LOG_TAG, "load App");
+        //Log.i(LOG_TAG, "si:" + savedInstanceState.toString());
 
         // let screen turned on while the app is running in foreground
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         // initialize name with default values
-        mNameLeftTeam = new StringWrapper(getResources().getString(R.string.nameLeftTeam));
-        mNameRightTeam = new StringWrapper(getResources().getString(R.string.nameRightTeam));
+        mNameLeftTeam = new StringWrapper("");
+        mNameRightTeam = new StringWrapper("");
 
 
         // where count points
@@ -120,6 +130,100 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
         // show number of wins end with
         mWinLeft = findViewById(R.id.winsLeft);
         mWinRight = findViewById(R.id.winsRight);
+    }
+
+    // lifecycle method
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        this.saveRuntimeState(savedInstanceState);
+
+        super.onSaveInstanceState(savedInstanceState);
+        Log.i(LOG_TAG, "onSave");
+    }
+
+    // lifecycle method
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        this.reloadRuntimeState(savedInstanceState);
+
+        Log.i(LOG_TAG, "onRestore");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        SharedPreferences settings =
+                PreferenceManager.getDefaultSharedPreferences(this);
+
+        // definir nome salvo na tela
+        // name
+        String defaultNameLeftTeam = getString(R.string.nameLeftTeam);
+        String nameLeftTeam = settings.getString(NAME_TEAM_LEFT, defaultNameLeftTeam);
+        mNameLeftTeam.setValue(nameLeftTeam);
+        setTextViewValue(R.id.LeftTeam, nameLeftTeam);
+
+        String defaultNameRightTeam = getString(R.string.nameRightTeam);
+        String nameRightTeam = settings.getString(NAME_TEAM_RIGHT, defaultNameRightTeam);
+        mNameRightTeam.setValue(nameRightTeam);
+        setTextViewValue(R.id.RightTeam, nameRightTeam);
+        Log.i(LOG_TAG, "lefTeam name: " + mNameLeftTeam);
+
+        // wins
+        mNumberWinsLeft = settings.getInt(WINS_LEFT_TEAM, 0);
+        setTextViewValue(R.id.winsLeft, "" + mNumberWinsLeft);
+        mNumberWinsRight = settings.getInt(WINS_RIGHT_TEAM, 0);
+        setTextViewValue(R.id.winsRight, "" + mNumberWinsRight);
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        // save data on preferences
+        SharedPreferences settings =
+                PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor prefEditor = settings.edit();
+
+        // wins
+        prefEditor.putInt(WINS_LEFT_TEAM, mNumberWinsLeft);
+        prefEditor.putInt(WINS_RIGHT_TEAM, mNumberWinsRight);
+
+        // name
+        prefEditor.putString(NAME_TEAM_LEFT, mNameLeftTeam.getValue());
+        prefEditor.putString(NAME_TEAM_RIGHT, mNameRightTeam.getValue());
+
+        // async save preferences
+        prefEditor.apply();
+
+    }
+
+    private void setTextViewValue(int resourceId, String newName) {
+        TextView view = findViewById(resourceId);
+        view.setText(newName);
+    }
+
+    private void saveRuntimeState(Bundle savedInstanceState) {
+        // wins
+        savedInstanceState.putInt(WINS_LEFT_TEAM, mNumberWinsLeft);
+        savedInstanceState.putInt(WINS_RIGHT_TEAM, mNumberWinsRight);
+
+        // points
+        savedInstanceState.putInt(POINTS_LEFT_TEAM, mPointsLeft);
+        savedInstanceState.putInt(POINTS_RIGHT_TEAM, mPointsRight);
+
+    }
+
+    private void reloadRuntimeState(Bundle savedInstanceState) {
+        // wins
+        mNumberWinsLeft = savedInstanceState.getInt(WINS_LEFT_TEAM, 0);
+        mNumberWinsRight = savedInstanceState.getInt(WINS_RIGHT_TEAM, 0);
+
+        // points
+        mPointsLeft = savedInstanceState.getInt(POINTS_LEFT_TEAM, 0);
+        mPointsRight = savedInstanceState.getInt(POINTS_RIGHT_TEAM, 0);
     }
 
     private void updateLeftSide() {
