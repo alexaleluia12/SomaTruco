@@ -151,6 +151,10 @@ public class Team implements View.OnClickListener {
         return score;
     }
 
+    public void setScore(int score) {
+        this.score = score;
+    }
+
     public String getName() {
         return name;
     }
