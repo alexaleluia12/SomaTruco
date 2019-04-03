@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="app_name">SomaTrucro</string>
+    <string name="nameLeftTeam">Time A</string>
+    <string name="nameRightTeam">Time B</string>
+    <string name="actionReset">Zerar</string>
+    <string name="okText">OK</string>
+    <string name="availableSpace">(%1$d)</string>
+    <string name="winEmoji"><xliff:g id="nameWhoWing" example="Team A">%s</xliff:g> ganhou! 🎉🎉🎉</string>
+    <string name="warnMessage">Está de onze ⛔</string>
+    <string name="cancel">Cancelar</string>
+    <string name="save">Salvar</string>
+    <string name="resetAllQuestion">Deseja zerar tudo?</string>
+    <string name="max_toast_message">Máx <xliff:g id="max_toast_message_number">%d</xliff:g></string>
+    <string name="toast_required_message">Insira um nome</string>
+    <string name="dialog_title_change_name">Mudar Nome</string>
+    <string name="startNumber">0</string>
+</resources>

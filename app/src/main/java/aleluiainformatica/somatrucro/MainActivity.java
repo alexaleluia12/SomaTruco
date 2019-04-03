@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
     private static final String NAME_TEAM_LEFT = "TEAM_LEFT_NAME";
     private static final String NAME_TEAM_RIGHT = "TEAM_RIGHT_NAME";
 
-    // --- new code ---
     private Team leftTeam;
     private Team rightTeam;
 
