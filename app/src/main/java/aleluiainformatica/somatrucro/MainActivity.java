@@ -43,6 +43,9 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
 
     private static final Integer LIMIT_WIN = 12;
     private static final Integer NAME_SIZE = 9;
+    // --- new code ---
+    private Team leftTeam;
+    private Team rightTeam;
 
 
     @Override
@@ -58,74 +61,88 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
         // initialize name with default values
         mNameLeftTeam = new StringWrapper("");
         mNameRightTeam = new StringWrapper("");
+        // --- new code ---
+        leftTeam = new Team("", 0, (TextView) findViewById(R.id.circleLeft));
+        rightTeam = new Team("", 0, (TextView) findViewById(R.id.circleRight));
+
+        leftTeam.setPlusThreeId((Button) findViewById(R.id.leftButton3Plus));
+        leftTeam.setPlusOneId((Button) findViewById(R.id.leftButtonPlus));
+        leftTeam.setMinusOneId((Button) findViewById(R.id.leftButtonMinus));
+
+        rightTeam.setPlusThreeId((Button) findViewById(R.id.rightButton3Plus));
+        rightTeam.setPlusOneId((Button) findViewById(R.id.rightButtonPlus));
+        rightTeam.setMinusOneId((Button) findViewById(R.id.rightButtonMinus));
+
+
+        // --- end new code ---
 
 
         // where count points
-        mPointsLeftTeam = findViewById(R.id.circleLeft);
-        mPointsRightTeam = findViewById(R.id.circleRight);
-        mPointsRight = 0;
-        mPointsLeft = 0;
-        updateLeftSide();
-        updateRightSide();
+//        mPointsLeftTeam = findViewById(R.id.circleLeft);
+//        mPointsRightTeam = findViewById(R.id.circleRight);
+//        mPointsRight = 0;
+//        mPointsLeft = 0;
+//        updateLeftSide();
+//        updateRightSide();
 
         // button that control the points
         // left side
-        final Button plus3Left = findViewById(R.id.leftButton3Plus);
-        final Button plusLeft = findViewById(R.id.leftButtonPlus);
-        final Button minusLeft = findViewById(R.id.leftButtonMinus);
-        // right side
-        final Button plus3Right = findViewById(R.id.rightButton3Plus);
-        final Button plusRight = findViewById(R.id.rightButtonPlus);
-        final Button minusRight = findViewById(R.id.rightButtonMinus);
+//        final Button plus3Left = findViewById(R.id.leftButton3Plus);
+//        final Button plusLeft = findViewById(R.id.leftButtonPlus);
+//        final Button minusLeft = findViewById(R.id.leftButtonMinus);
+//        // right side
+//        final Button plus3Right = findViewById(R.id.rightButton3Plus);
+//        final Button plusRight = findViewById(R.id.rightButtonPlus);
+//        final Button minusRight = findViewById(R.id.rightButtonMinus);
 
 
         // add actions to button
         // control points of each side
         // left
-        plus3Left.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPointsLeft += 3;
-                updateLeftSide();
-            }
-        });
-        plusLeft.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPointsLeft += 1;
-                updateLeftSide();
-            }
-        });
-        minusLeft.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPointsLeft -= 1;
-                updateLeftSide();
-            }
-
-        });
-        // right
-        plus3Right.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPointsRight += 3;
-                updateRightSide();
-            }
-        });
-        plusRight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPointsRight += 1;
-                updateRightSide();
-            }
-        });
-        minusRight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPointsRight -= 1;
-                updateRightSide();
-            }
-        });
+//        plus3Left.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                mPointsLeft += 3;
+//                updateLeftSide();
+//            }
+//        });
+//        plusLeft.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                mPointsLeft += 1;
+//                updateLeftSide();
+//            }
+//        });
+//        minusLeft.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                mPointsLeft -= 1;
+//                updateLeftSide();
+//            }
+//
+//        });
+//        // right
+//        plus3Right.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                mPointsRight += 3;
+//                updateRightSide();
+//            }
+//        });
+//        plusRight.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                mPointsRight += 1;
+//                updateRightSide();
+//            }
+//        });
+//        minusRight.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                mPointsRight -= 1;
+//                updateRightSide();
+//            }
+//        });
 
         // show number of wins end with
         mWinLeft = findViewById(R.id.winsLeft);
