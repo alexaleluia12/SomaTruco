@@ -1,4 +1,4 @@
-#Run
+#Run   
 Talvez você quereira gerar a apk desse app e o Android Studio de erro.
 Nesse caso atualize app/build.gradle, certifique que eles tem a mesma versão e de preferência para a última
 ```txt
@@ -32,7 +32,7 @@ targetSdkVersion 28
     Seria melhor se tive um efeito contrario, ficar claro quando clica uma vez que o botão tem cor escura
     https://developer.android.com/guide/topics/ui/controls/button
 
-#NOTA
+#NOTA   
 app suporta apenas truco paulista
 
 
