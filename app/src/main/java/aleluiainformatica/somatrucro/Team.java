@@ -13,9 +13,6 @@ import java.text.NumberFormat;
 
 public class Team implements View.OnClickListener {
 
-    /**
-     * id for button +3
-     */
     private int plusThreeId = -1;
     private int plusOneId = -1;
     private int minusOneId = -1;
@@ -39,7 +36,9 @@ public class Team implements View.OnClickListener {
      * ui element related with winsCount
      */
     private TextView uiWinsCount;
-
+    /**
+     * synchronize with state with other team (I am not sure this is the right solution)
+     */
     private AppState appState;
 
     public Team(String name, int score, TextView uiCore, TextView uiWinsCount, AppState appState) {
@@ -78,7 +77,7 @@ public class Team implements View.OnClickListener {
     }
 
     private void checkAndChangeWins() {
-        if (score >= 12) {
+        if (score >= AppConfig.LIMIT_WIN) {
             winsCount += 1;
         }
     }
@@ -173,7 +172,6 @@ public class Team implements View.OnClickListener {
         Toast toast = Toast.makeText(appState.getAppContext(), message, Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
-
     }
 
     @Override

@@ -182,14 +182,4 @@
 
     </LinearLayout>
 
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:background="@android:color/holo_green_light"
-        android:text="ads-test"
-        />
-
 </RelativeLayout>

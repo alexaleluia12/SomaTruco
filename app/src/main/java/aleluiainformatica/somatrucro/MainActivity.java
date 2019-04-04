@@ -92,8 +92,7 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
         });
 
     }
-
-    // lifecycle method
+    // ******* lifecycle methods **************
     @Override
     protected void onSaveInstanceState(Bundle savedInstanceState) {
         this.saveRuntimeState(savedInstanceState);
@@ -102,7 +101,6 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
         Log.i(LOG_TAG, "onSave");
     }
 
-    // lifecycle method
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
@@ -111,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
 
         Log.i(LOG_TAG, "onRestore");
     }
-    // lifecycle method
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -140,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
         rightTeam.setWins(winsRightTeam);
         rightTeam.renderUiWinElement();
     }
-    // lifecycle method
+
     @Override
     protected void onStop() {
         super.onStop();
@@ -160,6 +158,8 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
         // async save preferences
         prefEditor.apply();
     }
+
+    // ******* end - lifecycle methods **************
 
     private void setTextViewValue(int resourceId, String newName) {
         TextView view = findViewById(resourceId);
@@ -223,7 +223,7 @@ public class MainActivity extends AppCompatActivity implements  PopupMenu.OnMenu
 
     // pop-up menu
     // https://developer.android.com/guide/topics/ui/menus#PopupMenu
-    // method called on activity_main from config ui element (3 dogs vertical)
+    // method called on activity_main from config ui element (3 dots vertical)
     public void showMenu(View v) {
         PopupMenu popup = new PopupMenu(this, v);
         popup.setOnMenuItemClickListener(this);
