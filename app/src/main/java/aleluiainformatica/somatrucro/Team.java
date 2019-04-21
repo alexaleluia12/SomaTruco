@@ -184,7 +184,7 @@ public class Team implements View.OnClickListener {
         } else if (currentButtonId == minusOneId) {
             decrementOne();
         } else {
-            throw new RuntimeException("id for button " + currentButtonId + " is not expected");
+            throw new RuntimeException("id for dark_black_background " + currentButtonId + " is not expected");
         }
 
         updateUiScore();

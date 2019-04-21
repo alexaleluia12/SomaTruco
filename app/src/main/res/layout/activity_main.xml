@@ -2,8 +2,6 @@
 <RelativeLayout
 
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:ads="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,22 +14,21 @@
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_more_vert_black_24dp"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="8dp"
+        android:layout_alignParentRight="true"
         android:layout_marginEnd="8dp"
-        android:onClick="showMenu"
+        android:layout_marginRight="8dp"
         android:background="#00cccccc"
+        android:onClick="showMenu"
+        android:src="@drawable/ic_more_vert_black_24dp"
 
         />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginBottom="45dp"
-        >
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -52,10 +49,10 @@
 
                 <TextView
                     android:id="@+id/circleLeft"
+                    style="@style/PointArea"
                     android:layout_below="@+id/LeftTeam"
                     android:background="@drawable/circle_black"
-                    android:text="@string/startNumber"
-                    style="@style/PointArea"/>
+                    android:text="@string/startNumber" />
 
 
                 <TextView
@@ -69,39 +66,35 @@
 
                 <Button
                     android:id="@+id/leftButton3Plus"
-                    android:layout_above="@+id/leftButtonPlus"
-                    android:text="+3"
                     style="@style/Button"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginLeft="32dp"
+                    android:layout_above="@+id/leftButtonPlus"
                     android:layout_marginStart="32dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@color/colorBlack"
-                     />
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/black_button"
+                    android:text="+3" />
 
                 <Button
                     android:id="@+id/leftButtonPlus"
-                    android:layout_above="@+id/leftButtonMinus"
-                    android:text="+1"
                     style="@style/Button"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginRight="32dp"
-                    android:layout_marginEnd="32dp"
+                    android:layout_above="@+id/leftButtonMinus"
                     android:layout_alignParentEnd="true"
-                    android:background="@color/colorBlack"
-                    />
+                    android:layout_alignParentRight="true"
+                    android:layout_marginEnd="32dp"
+                    android:layout_marginRight="32dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@drawable/black_button"
+                    android:text="+1" />
 
                 <Button
                     android:id="@+id/leftButtonMinus"
-                    android:text="-1"
                     style="@style/Button"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="32dp"
-                    android:layout_marginLeft="32dp"
                     android:layout_marginStart="32dp"
-                    android:background="@color/colorBlack"
-                    />
+                    android:layout_marginLeft="32dp"
+                    android:layout_marginBottom="32dp"
+                    android:background="@drawable/black_button"
+                    android:text="-1" />
             </RelativeLayout>
 
         </LinearLayout>
@@ -115,66 +108,59 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                >
+                android:layout_height="match_parent">
 
                 <TextView
                     android:id="@+id/RightTeam"
-                    android:text="@string/nameRightTeam"
                     style="@style/TeamTitle"
-                    />
+                    android:text="@string/nameRightTeam" />
 
                 <TextView
                     android:id="@+id/circleRight"
+                    style="@style/PointArea"
                     android:layout_below="@+id/RightTeam"
                     android:background="@drawable/circle_red"
-                    android:text="@string/startNumber"
-                    style="@style/PointArea"
-                    >
-                </TextView>
+                    android:text="@string/startNumber"></TextView>
 
                 <TextView
                     android:id="@+id/winsRight"
+                    style="@style/TeamPoints"
                     android:layout_below="@+id/circleRight"
-                    android:text="@string/startNumber"
-                    style="@style/TeamPoints"/>
+                    android:text="@string/startNumber" />
 
                 <Button
                     android:id="@+id/rightButton3Plus"
-                    android:layout_above="@+id/rightButtonPlus"
-                    android:text="+3"
                     style="@style/Button"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="32dp"
-                    android:layout_marginEnd="32dp"
+                    android:layout_above="@+id/rightButtonPlus"
                     android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginEnd="32dp"
+                    android:layout_marginRight="32dp"
                     android:layout_marginBottom="8dp"
-                    android:background="@color/colorRed"
-                    />
+                    android:background="@drawable/red_button"
+                    android:text="+3" />
 
                 <Button
                     android:id="@+id/rightButtonPlus"
-                    android:layout_above="@+id/rightButtonMinus"
-                    android:text="+1"
                     style="@style/Button"
-                    android:layout_marginLeft="32dp"
+                    android:layout_above="@+id/rightButtonMinus"
                     android:layout_marginStart="32dp"
+                    android:layout_marginLeft="32dp"
                     android:layout_marginBottom="8dp"
-                    android:background="@color/colorRed"
-                    />
+                    android:background="@drawable/red_button"
+                    android:text="+1" />
 
                 <Button
                     android:id="@+id/rightButtonMinus"
-                    android:text="-1"
                     style="@style/Button"
-                    android:background="@color/colorRed"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="32dp"
-                    android:layout_marginEnd="32dp"
                     android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginEnd="32dp"
+                    android:layout_marginRight="32dp"
                     android:layout_marginBottom="32dp"
-                    />
+                    android:background="@drawable/red_button"
+                    android:text="-1" />
 
             </RelativeLayout>
 
