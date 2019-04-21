@@ -27,7 +27,7 @@ targetSdkVersion 28
 - deixar botão mais claro quando é clicado (holo color)
 
 
-#NOTA
+#NOTA   
 app suporta apenas truco paulista
 
 
